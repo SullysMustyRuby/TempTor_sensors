@@ -46,11 +46,8 @@ sensor = MAX31855.MAX31855(CLK, CS, DO)
 
 #Server Setup
 def logtemp(temp,time):
-	connection=sqlite3.connect(my_datbase_production)
-	curs=connection.cursor()
-	curs.execute("Insert into temps values(time('time'),(?))",(temp,))
-	connection.commit()
-	connection.close()
+	curl -X POST -H "Content-Type: application/json" -d '{ "temperature": {"measurement": temp, "sensor_id": "1"}} ' https://temptor.herokuapp.com//temperatures.json
+
 
 
 #Sutton Cowperthwaite & Maryjane Clark
