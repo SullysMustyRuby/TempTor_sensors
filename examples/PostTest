@@ -1,0 +1,4 @@
+import pycurl
+import StringIO
+
+curl -X POST -H "Content-Type: application/json" -d '{ "temperature": {"measurement": "20.22", "sensor_id": "1"}} ' https://temptor.herokuapp.com//temperatures.json

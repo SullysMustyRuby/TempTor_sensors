@@ -33,7 +33,7 @@ hrs= 0
 mins =0
 secs= 0
 addsecs = 0
-addmins =0
+addmins=0
 addhrs =0 	
 
 
@@ -45,9 +45,9 @@ sensor = MAX31855.MAX31855(CLK, CS, DO)
 
 
 #Server Setup
-def logtemp(temp,time):
-	curl -X POST -H "Content-Type: application/json" -d '{ "temperature": {"measurement": temp, "sensor_id": "1"}} ' https://temptor.herokuapp.com//temperatures.json
-
+def logtemp(temp):
+	curl -X POST -H "Content-Type: application/json" -d '{ "temperature": {"measurement": "temp", "sensor_id": "1"}} ' https://temptor.herokuapp.com//temperatures.json
+	
 
 
 #Sutton Cowperthwaite & Maryjane Clark
@@ -64,6 +64,7 @@ def Sensor (Unit , Time):
 			Intern=UnitChange(internal,unitset)
 			print 'Thermocouple Temperature: {0:0.3F}*C'.format(Temper)
 			print 'Internal Temperature: {0:0.3F}*C'.format(Intern)
+			logtemp(Temper)
 			time.sleep(Time)
 	if Unit in ['K','k']:
 		unitset =1
@@ -74,6 +75,7 @@ def Sensor (Unit , Time):
 			Intern=UnitChange(internal,unitset)
 			print 'Thermocouple Temperature: {0:0.3F}*K'.format(Temper)
 			print 'Internal Temperature: {0:0.3F}*k'.format(Intern)
+			logtemp(Temper)
 			time.sleep(Time)
 	if Unit in ['F','f']:
 		unitset = 2
@@ -84,9 +86,10 @@ def Sensor (Unit , Time):
 			Intern=UnitChange(internal,unitset)
 			print 'Thermocouple Temperature: {0:0.3F}*F'.format(Temper)
 			print 'Internal Temperature: {0:0.3F}*F'.format(Intern)
+			logtemp(Temper)
 			time.sleep(Time)
-	Timeset += Time		
-	logtemp(Temper,Timeset)				
+		
+				
 
 #Sutton Cowperthwaite & Maryjane Clark code
 #Change the temperature units
@@ -94,7 +97,7 @@ def UnitChange(c,setpt):
 	if setpt == 0:
 		return c
 	elif setpt ==1:
-		K= c-273.15
+		K= c+273.15
 		return K
 	elif setpt == 2:		
 		F=(9/5)*c+32.0
