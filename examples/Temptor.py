@@ -24,6 +24,7 @@ import time
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MAX31855.MAX31855 as MAX31855
 import socket
+import pycurl, json
 
 #Global Variables
 tempunit = 'C'
@@ -46,8 +47,14 @@ sensor = MAX31855.MAX31855(CLK, CS, DO)
 
 #Server Setup
 def logtemp(temp):
-	curl -X POST -H "Content-Type: application/json" -d '{ "temperature": {"measurement": "temp", "sensor_id": "1"}} ' https://temptor.herokuapp.com//temperatures.json
-	
+	url= 'https://temptor.herokuapp.com//temperatures'
+	data = json.dumps({ "temperature": {"measurement": 5, "sensor_id": "1"}})
+	c=pycurl.Curl()
+	c.setopt(pycurl.URL, url)
+	c.setopt(pycurl.HTTPHEADER, ['Aceppt: application/json'])
+	c.setopt(pycurl.POST, 1)
+	c.setopt(pycurl.POSTFIELDS, data)
+	c.perform()
 
 
 #Sutton Cowperthwaite & Maryjane Clark
