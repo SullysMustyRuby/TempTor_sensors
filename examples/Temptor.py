@@ -44,19 +44,6 @@ CS  = 24
 DO  = 18
 sensor = MAX31855.MAX31855(CLK, CS, DO)
 
-
-#Server Setup
-def logtemp(temp):
-	url= 'https://temptor.herokuapp.com//temperatures'
-	data = json.dumps({ "temperature": {"measurement": 5, "sensor_id": "1"}})
-	c=pycurl.Curl()
-	c.setopt(pycurl.URL, url)
-	c.setopt(pycurl.HTTPHEADER, ['Aceppt: application/json'])
-	c.setopt(pycurl.POST, 1)
-	c.setopt(pycurl.POSTFIELDS, data)
-	c.perform()
-
-
 #Sutton Cowperthwaite & Maryjane Clark
 # Loop printing measurements every second.
 def Sensor (Unit , Time):
@@ -71,7 +58,6 @@ def Sensor (Unit , Time):
 			Intern=UnitChange(internal,unitset)
 			print 'Thermocouple Temperature: {0:0.3F}*C'.format(Temper)
 			print 'Internal Temperature: {0:0.3F}*C'.format(Intern)
-			logtemp(Temper)
 			time.sleep(Time)
 	if Unit in ['K','k']:
 		unitset =1
@@ -82,7 +68,6 @@ def Sensor (Unit , Time):
 			Intern=UnitChange(internal,unitset)
 			print 'Thermocouple Temperature: {0:0.3F}*K'.format(Temper)
 			print 'Internal Temperature: {0:0.3F}*k'.format(Intern)
-			logtemp(Temper)
 			time.sleep(Time)
 	if Unit in ['F','f']:
 		unitset = 2
@@ -93,7 +78,6 @@ def Sensor (Unit , Time):
 			Intern=UnitChange(internal,unitset)
 			print 'Thermocouple Temperature: {0:0.3F}*F'.format(Temper)
 			print 'Internal Temperature: {0:0.3F}*F'.format(Intern)
-			logtemp(Temper)
 			time.sleep(Time)
 		
 				
